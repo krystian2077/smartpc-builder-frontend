@@ -1,0 +1,18 @@
+# Database
+# DATABASE_URL=sqlite+aiosqlite:///./smartpc.db
+
+# Security
+JWT_SECRET=change_me_in_prod_secret_key_12345
+JWT_ALGORITHM=HS256
+JWT_EXPIRE_MINUTES=10080
+
+# Email / SMTP Configuration (Gmail)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=krystian.potaczek07@gmail.com
+# Instrukcja: https://support.google.com/accounts/answer/185833
+SMTP_PASSWORD=sthsaocjnkfujdop
+SMTP_FROM_EMAIL=krystian.potaczek07@gmail.com
+
+# Application Settings
+INQUIRY_EMAIL=krystian.potaczek07@gmail.com
