@@ -5,6 +5,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 
+export const dynamic = 'force-dynamic';
+
 
 
 type ComponentType =
