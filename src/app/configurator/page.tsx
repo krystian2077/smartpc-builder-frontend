@@ -176,6 +176,9 @@ export default function ConfiguratorPage() {
     cooler: 'default',
   });
 
+  const [showMissingModal, setShowMissingModal] = useState(false);
+  const [missingComponents, setMissingComponents] = useState<ComponentType[]>([]);
+
   const { data: cpuProducts } = useQuery({
     queryKey: ["products", "cpu"],
     queryFn: async () => {
@@ -281,7 +284,13 @@ export default function ConfiguratorPage() {
       ...prev,
       components: { ...prev.components, [type]: productId },
     }));
-    // Removed auto-collapse - list stays expanded after selection
+    // Auto-scroll to the selected component section
+    setTimeout(() => {
+      const element = document.getElementById(`component-${type}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   const handleRemoveComponent = (type: ComponentType) => {
@@ -374,9 +383,13 @@ export default function ConfiguratorPage() {
       <button
         key={value}
         onClick={() => isSort ? handleSortChange(type, value) : handleFilterChange(type, value)}
-        className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${isSort
-          ? (sorting[type] === value ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600')
-          : (filters[type] === value ? 'bg-emerald-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600')
+        className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${isSort
+          ? (sorting[type] === value
+            ? 'bg-blue-500 text-white shadow-md'
+            : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/70')
+          : (filters[type] === value
+            ? 'bg-emerald-500 text-white shadow-md'
+            : 'bg-gray-700/50 text-gray-300 hover:bg-gray-600/70')
           }`}
       >
         {label}
@@ -468,13 +481,20 @@ export default function ConfiguratorPage() {
     ];
 
     return (
-      <div className="mb-4 space-y-2">
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-emerald-600 scrollbar-track-gray-800">
-          {options.map(opt => renderButton(opt.label, opt.value, false))}
+      <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 mb-6 border border-gray-700/30">
+        {/* Filters */}
+        <div className="mb-4">
+          <div className="flex flex-wrap gap-2">
+            {options.map(opt => renderButton(opt.label, opt.value, false))}
+          </div>
         </div>
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-800">
-          <span className="text-gray-400 text-sm self-center mr-2">Sortuj:</span>
-          {sortOptions.map(opt => renderButton(opt.label, opt.value, true))}
+
+        {/* Sorting - separated with subtle divider */}
+        <div className="pt-4 border-t border-gray-700/20">
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-gray-400 text-xs font-medium mr-1">Sortowanie:</span>
+            {sortOptions.map(opt => renderButton(opt.label, opt.value, true))}
+          </div>
         </div>
       </div>
     );
@@ -530,6 +550,7 @@ export default function ConfiguratorPage() {
               {COMPONENT_ORDER.map((type) => (
                 <section
                   key={type}
+                  id={`component-${type}`}
                   className={`relative rounded-2xl transition-all duration-500 ${expanded[type]
                     ? "bg-gray-900/60 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] border border-white/10 ring-1 ring-white/5"
                     : "bg-gray-800/40 border border-white/5 hover:bg-gray-800/60"
@@ -572,13 +593,14 @@ export default function ConfiguratorPage() {
                         </span>
                       )}
                       <button
-                        className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all duration-300 ${expanded[type]
-                          ? "bg-gray-800 border-gray-600 text-white rotate-180"
-                          : "bg-gray-800/50 border-gray-700 text-gray-400 group-hover/section:border-emerald-500/30 group-hover/section:text-emerald-400"
+                        className={`px-4 sm:px-5 py-3 sm:py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center gap-2 min-w-[100px] justify-center ${expanded[type]
+                          ? "bg-emerald-600 text-white border-2 border-emerald-500 hover:bg-emerald-700 shadow-lg shadow-emerald-500/30"
+                          : "bg-gradient-to-br from-emerald-900/40 to-teal-900/40 text-white border-2 border-emerald-500/50 hover:border-emerald-400/70 hover:from-emerald-900/50 hover:to-teal-900/50"
                           }`}
                       >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <span>{expanded[type] ? "Zwiń" : "Rozwiń"}</span>
+                        <svg className={`w-4 h-4 transition-transform duration-300 ${expanded[type] ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
                     </div>
@@ -678,12 +700,12 @@ export default function ConfiguratorPage() {
                                 {/* Hover glow effect */}
                                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl blur-lg opacity-0 group-hover/item:opacity-100 transition-all duration-500"></div>
 
-                                <div
-                                  onClick={() => handleSelectComponent(type, product.id)}
-                                  className="relative w-full text-left p-4 rounded-xl border transition-all duration-300 cursor-pointer border-gray-700 bg-gray-700/30 hover:border-emerald-500/50 hover:bg-gray-700/50 hover:shadow-lg"
-                                >
+                                <div className="relative w-full text-left p-4 rounded-xl border transition-all duration-300 border-gray-700 bg-gray-700/30 hover:border-emerald-500/50 hover:bg-gray-700/50 hover:shadow-lg">
                                   <div className="flex justify-between items-start gap-4">
-                                    <div className="flex-1">
+                                    <div
+                                      onClick={() => handleSelectComponent(type, product.id)}
+                                      className="flex-1 cursor-pointer"
+                                    >
                                       <div className="font-semibold text-lg mb-1 text-white group-hover/item:text-emerald-300 transition-colors">
                                         {product.name}
                                       </div>
@@ -700,9 +722,25 @@ export default function ConfiguratorPage() {
                                       </div>
                                     </div>
                                     <div className="flex flex-col items-end gap-2">
-                                      <div className="font-bold text-emerald-400 text-lg whitespace-nowrap">
+                                      <div
+                                        onClick={() => handleSelectComponent(type, product.id)}
+                                        className="font-bold text-emerald-400 text-lg whitespace-nowrap cursor-pointer"
+                                      >
                                         {product.price.toLocaleString("pl-PL")} zł
                                       </div>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          toggleExpanded(type);
+                                        }}
+                                        className="mt-2 px-4 py-2 sm:px-3.5 sm:py-1.5 bg-gray-800/80 text-gray-300 border border-emerald-500/50 hover:border-emerald-400/70 hover:bg-gray-700 hover:text-emerald-200 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.2)] hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] min-h-[44px]"
+                                        title="Zwiń listę"
+                                      >
+                                        <svg className="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                        <span>Zwiń</span>
+                                      </button>
                                     </div>
                                   </div>
                                 </div>
@@ -715,6 +753,19 @@ export default function ConfiguratorPage() {
                             </div>
                           )}
                         </div>
+
+                        {/* Bottom Collapse Button - small and compact */}
+                        <div className="mt-4 pt-4 border-t border-gray-700/30 flex justify-center">
+                          <button
+                            onClick={() => toggleExpanded(type)}
+                            className="px-4 py-2 bg-gray-800/60 text-gray-300 border border-gray-600/50 hover:border-emerald-500/50 hover:bg-gray-700/80 hover:text-emerald-300 rounded-lg font-medium text-xs transition-all duration-300 flex items-center gap-1.5"
+                          >
+                            <svg className="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                            <span>Zwiń</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -723,9 +774,9 @@ export default function ConfiguratorPage() {
             </div>
 
             {/* Sidebar - Summary */}
-            <div className="lg:col-span-9">
-              <div className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 p-6 sticky top-6">
-                <h2 className="text-2xl font-bold mb-6 text-white border-b border-gray-700 pb-4">Podsumowanie</h2>
+            <div className="lg:col-span-9 w-full">
+              <div className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 p-4 sm:p-6 sticky top-6">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white border-b border-gray-700 pb-3 sm:pb-4">Podsumowanie</h2>
 
                 <div className="space-y-4 mb-8">
                   <div className="flex justify-between text-lg items-center">
@@ -738,6 +789,20 @@ export default function ConfiguratorPage() {
 
                 <button
                   onClick={() => {
+                    // Check if all required components are selected
+                    const missingComponents: ComponentType[] = [];
+                    COMPONENT_ORDER.forEach((type) => {
+                      if (!config.components[type]) {
+                        missingComponents.push(type);
+                      }
+                    });
+
+                    if (missingComponents.length > 0) {
+                      setMissingComponents(missingComponents);
+                      setShowMissingModal(true);
+                      return;
+                    }
+
                     const allProducts = [
                       ...(cpuProducts || []),
                       ...(motherboardProducts || []),
@@ -804,16 +869,16 @@ export default function ConfiguratorPage() {
                 {/* Assembly Service Section */}
                 <div
                   onClick={() => setAssemblyService(!assemblyService)}
-                  className="p-5 rounded-xl border border-gray-700 bg-gradient-to-br from-gray-800/50 to-gray-900/50 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:bg-gray-800 group cursor-pointer relative overflow-hidden"
+                  className="p-4 sm:p-5 rounded-xl border border-gray-700 bg-gradient-to-br from-gray-800/50 to-gray-900/50 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:bg-gray-800 group cursor-pointer relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <div className="flex-1">
+                  <div className="flex flex-col sm:flex-row items-start justify-between gap-4 mb-4">
+                    <div className="flex-1 w-full">
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="text-2xl">🔧</span>
-                        <h3 className="text-lg font-bold text-white">Montaż z instalacją systemu operacyjnego</h3>
+                        <span className="text-xl sm:text-2xl">🔧</span>
+                        <h3 className="text-base sm:text-lg font-bold text-white leading-tight">Montaż z instalacją systemu operacyjnego</h3>
                       </div>
-                      <ul className="space-y-2 text-sm text-gray-300 mb-4">
+                      <ul className="space-y-2 text-xs sm:text-sm text-gray-300 mb-4">
                         <li className="flex items-start gap-2">
                           <span className="text-emerald-400 mt-0.5">✓</span>
                           <span>Profesjonalny montaż podzespołów</span>
@@ -831,18 +896,18 @@ export default function ConfiguratorPage() {
                           <span>Aktualizacja BIOS</span>
                         </li>
                       </ul>
-                      <div className="p-3 bg-emerald-900/20 border border-emerald-700/30 rounded-lg mb-3">
-                        <p className="text-sm text-emerald-300">
+                      <div className="p-2.5 sm:p-3 bg-emerald-900/20 border border-emerald-700/30 rounded-lg mb-3">
+                        <p className="text-xs sm:text-sm text-emerald-300 leading-relaxed">
                           W cenie zapewnimy Ci <span className="font-semibold">pełne serwisowanie i diagnostykę</span> całego zestawu komputerowego przez okres <span className="font-semibold">dwóch lat</span> od dnia, w którym odbierzesz zamówienie.
                         </p>
                       </div>
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-900/30 border border-blue-700/50 rounded-lg">
-                        <span className="text-xl">🎁</span>
-                        <span className="text-blue-300 text-sm font-semibold">Windows 11 Pro GRATIS</span>
+                      <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1.5 bg-blue-900/30 border border-blue-700/50 rounded-lg">
+                        <span className="text-lg sm:text-xl">🎁</span>
+                        <span className="text-blue-300 text-xs sm:text-sm font-semibold">Windows 11 Pro GRATIS</span>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end gap-3">
-                      <div className="text-2xl font-bold text-emerald-400">{ASSEMBLY_PRICE} zł</div>
+                    <div className="flex flex-row sm:flex-col items-center sm:items-end gap-3 w-full sm:w-auto justify-between sm:justify-start">
+                      <div className="text-xl sm:text-2xl font-bold text-emerald-400">{ASSEMBLY_PRICE} zł</div>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -862,7 +927,69 @@ export default function ConfiguratorPage() {
             </div>
           </div>
         </div>
-      </div >
-    </div >
+      </div>
+
+      {/* Missing Components Modal */}
+      {showMissingModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="relative max-w-md w-full animate-scale-in">
+            {/* Glow effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 rounded-2xl blur-xl opacity-50 animate-pulse" style={{ animationDuration: '3s' }}></div>
+
+            <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border-2 border-red-500/50 shadow-2xl overflow-hidden">
+              {/* Header */}
+              <div className="bg-gradient-to-r from-red-600/20 to-orange-600/20 px-6 py-5 border-b border-red-500/30">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Nie wybrano wszystkich komponentów!</h3>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="px-6 py-6">
+                <p className="text-gray-300 mb-4 text-sm">
+                  Aby wysłać zapytanie o wycenę, musisz wybrać wszystkie wymagane komponenty.
+                </p>
+
+                <div className="bg-red-950/30 border border-red-500/30 rounded-xl p-4 mb-6">
+                  <p className="text-red-300 font-semibold mb-3 text-sm">Brakujące komponenty:</p>
+                  <ul className="space-y-2">
+                    {missingComponents.map((type) => (
+                      <li key={type} className="flex items-center gap-2 text-gray-200">
+                        <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <span className="text-sm font-medium">{COMPONENT_LABELS[type]}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <p className="text-gray-400 text-xs italic">
+                  Przewiń w górę i wybierz brakujące komponenty z dostępnych opcji.
+                </p>
+              </div>
+
+              {/* Footer */}
+              <div className="bg-gray-900/50 px-6 py-4 border-t border-gray-700">
+                <button
+                  onClick={() => {
+                    setShowMissingModal(false);
+                    setMissingComponents([]);
+                  }}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-bold hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg hover:shadow-emerald-500/25 transform active:scale-95"
+                >
+                  Rozumiem
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

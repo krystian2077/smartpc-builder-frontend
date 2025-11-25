@@ -102,23 +102,27 @@ export default function Home() {
     <main className="min-h-screen bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
-          {/* Header with WOW effects */}
-          <header className="text-center mb-16 relative">
-            {/* Animated background elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
-              <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }}></div>
+          {/* Hero Section - Elegant Premium */}
+          <header className="text-center mb-24 relative">
+            {/* Subtle Animated Background */}
+            <div className="absolute -inset-20 overflow-hidden pointer-events-none">
+              <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-cyan-500/5 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '6s' }}></div>
+              <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-blue-500/3 via-teal-500/3 to-emerald-500/3 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }}></div>
             </div>
 
             <div className="relative z-10">
-              <h1 className="text-6xl md:text-7xl font-extrabold mb-6 animate-fade-in">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 animate-gradient">
+              {/* Elegant Title */}
+              <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">
+                <span className="text-white drop-shadow-2xl">
                   SmartPC Builder
                 </span>
               </h1>
-              <p className="text-2xl text-gray-300 mb-8 font-light max-w-3xl mx-auto">
+
+              {/* Clean Subtitle */}
+              <p className="text-xl md:text-2xl text-gray-300 mb-4 font-normal max-w-3xl mx-auto leading-relaxed">
                 Twój wymarzony komputer w zasięgu ręki.
-                <br />
+              </p>
+              <p className="text-lg md:text-xl text-gray-400 mb-12 font-light max-w-2xl mx-auto">
                 <span className="text-emerald-400 font-semibold">
                   Skonfiguruj sam
                 </span>{" "}
@@ -128,47 +132,77 @@ export default function Home() {
                 </span>
                 .
               </p>
+
+              {/* Refined CTA Buttons */}
               <div className="flex flex-col sm:flex-row justify-center gap-4">
+                {/* Primary Button */}
                 <button
                   onClick={() => {
                     document
                       .getElementById("configurator")
                       ?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="group relative px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-emerald-500/50 transform hover:-translate-y-1 hover:scale-105"
+                  className="group relative px-8 py-4 overflow-hidden rounded-xl font-semibold text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
-                  <span className="relative">Rozpocznij konfigurację</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  <span className="relative text-white flex items-center justify-center gap-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Rozpocznij konfigurację
+                  </span>
                 </button>
+
+                {/* Secondary Button */}
                 <button
                   onClick={() => {
                     router.push("/presets");
                   }}
-                  className="px-8 py-4 bg-transparent text-emerald-400 border-2 border-emerald-500/30 rounded-full font-semibold text-lg hover:border-emerald-400 hover:bg-emerald-500/10 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 backdrop-blur-sm"
+                  className="group relative px-8 py-4 overflow-hidden rounded-xl font-semibold text-lg transition-all transform hover:scale-105 active:scale-95"
                 >
-                  Zobacz polecane
+                  <div className="absolute inset-0 bg-gray-800/50 border-2 border-emerald-500/30 group-hover:border-emerald-500/60 rounded-xl backdrop-blur-sm transition-all"></div>
+                  <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-all rounded-xl"></div>
+
+                  <span className="relative text-emerald-400 group-hover:text-emerald-300 flex items-center justify-center gap-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>
+                    Zobacz polecane
+                  </span>
                 </button>
               </div>
             </div>
           </header>
 
-          {/* Featured Presets Section */}
+          {/* Featured Presets Section - Clean & Elegant */}
           <section id="featured" className="mb-24">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mb-6 sm:mb-8 gap-4">
+              {/* Clean Title Section */}
               <div>
-                <h2 className="text-3xl font-bold text-white mb-2">
+                <div className="inline-block mb-2">
+                  <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 font-semibold text-xs tracking-wider uppercase">
+                    ⭐ TOP 2025
+                  </span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">
                   Polecane Zestawy 2025
                 </h2>
-                <p className="text-gray-400">
+                <p className="text-sm sm:text-base text-gray-400 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
                   Wyselekcjonowane przez ekspertów PRO-KOM
                 </p>
               </div>
 
-              <div className="flex items-center gap-4">
+              {/* Clean Controls */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                 <select
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value as any)}
-                  className="bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-emerald-500"
+                  className="bg-gray-800/80 text-white border border-gray-700 hover:border-emerald-500/50 rounded-lg px-4 py-3 sm:py-2.5 focus:outline-none focus:border-emerald-500 transition-all font-medium shadow-lg backdrop-blur-sm text-sm w-full sm:w-auto"
                 >
                   <option value="price_desc">Cena: od najwyższej</option>
                   <option value="price_asc">Cena: od najniższej</option>
@@ -178,9 +212,12 @@ export default function Home() {
 
                 <Link
                   href="/presets"
-                  className="text-emerald-400 font-semibold hover:text-emerald-300 flex items-center gap-2 whitespace-nowrap"
+                  className="group/link px-5 py-3 sm:py-2.5 bg-gray-800/50 border border-emerald-500/30 hover:border-emerald-500/60 hover:bg-gray-800/80 rounded-lg font-semibold text-emerald-400 hover:text-emerald-300 flex items-center justify-center gap-2 transition-all shadow-lg backdrop-blur-sm text-sm w-full sm:w-auto"
                 >
-                  Zobacz wszystkie <span className="text-xl">→</span>
+                  <span>Zobacz wszystkie</span>
+                  <svg className="w-4 h-4 group-hover/link:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </Link>
               </div>
             </div>
@@ -290,15 +327,15 @@ export default function Home() {
               </div>
 
               {/* Heading */}
-              <h2 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-400 mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-400 mb-6 leading-tight">
                 Zbuduj Swój Wymarzony PC
               </h2>
 
-              <p className="text-xl md:text-2xl text-gray-300 mb-4">
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 leading-relaxed px-4 sm:px-0">
                 Stwórz idealną konfigurację dopasowaną do Twoich potrzeb
               </p>
 
-              <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-gray-400 mb-10 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
                 Nasz inteligentny konfigurator pomoże Ci wybrać najlepsze komponenty. Wybierz każdą część osobno i zbuduj komputer swoich marzeń! 🚀
               </p>
 
@@ -324,17 +361,17 @@ export default function Home() {
               {/* CTA Button */}
               <button
                 onClick={() => router.push('/configurator?device=pc&segment=gaming&budget=5000')}
-                className="group relative inline-flex items-center gap-3 px-12 py-6 bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 text-white rounded-2xl font-bold text-xl transition-all transform hover:scale-105 active:scale-95 shadow-2xl hover:shadow-emerald-500/50"
+                className="group relative inline-flex items-center justify-center gap-3 px-8 sm:px-12 py-5 sm:py-6 bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 text-white rounded-2xl font-bold text-lg sm:text-xl transition-all transform hover:scale-105 active:scale-95 shadow-2xl hover:shadow-emerald-500/50 w-full sm:w-auto max-w-md mx-auto"
               >
                 <span className="relative z-10 drop-shadow-lg">Konfiguruj swój PC</span>
-                <svg className="w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 relative z-10 group-hover:translate-x-1 transition-transform drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
                 {/* Animated glow */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
               </button>
 
-              <p className="text-lg text-gray-400 mt-6 font-medium">
+              <p className="text-base sm:text-lg text-gray-400 mt-6 font-medium leading-relaxed px-4 sm:px-0">
                 ✨ Bezpłatna konsultacja i pomoc w doborze komponentów
               </p>
             </div>

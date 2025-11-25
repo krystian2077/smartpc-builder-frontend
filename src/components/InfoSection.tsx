@@ -144,16 +144,16 @@ export default function InfoSection() {
                 {/* Hero Section */}
                 <div className="text-center mb-20">
                     <div className="inline-block mb-6">
-                        <span className="px-6 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 font-semibold text-sm tracking-wider uppercase backdrop-blur-sm">
+                        <span className="px-3 sm:px-6 py-1.5 sm:py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 font-semibold text-xs sm:text-sm tracking-wider uppercase backdrop-blur-sm">
                             ✨ Profesjonalny montaż komputerów
                         </span>
                     </div>
-                    <h2 className="text-5xl md:text-6xl font-extrabold mb-6">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400">
                             Dlaczego SmartPC Builder?
                         </span>
                     </h2>
-                    <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
                         Stawiamy na <span className="text-emerald-400 font-semibold">jakość</span>, <span className="text-emerald-400 font-semibold">transparentność</span> i <span className="text-emerald-400 font-semibold">profesjonalizm</span>.
                         <br />Zobacz, co zyskujesz wybierając nasze zestawy.
                     </p>
@@ -260,55 +260,85 @@ export default function InfoSection() {
                 {/* FAQ Section */}
                 <div className="max-w-4xl mx-auto mb-20">
                     <div className="text-center mb-16">
-                        <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400">
+                        <div className="inline-block mb-6">
+                            <span className="px-6 py-3 bg-emerald-500/20 border-2 border-emerald-500/50 rounded-full text-emerald-300 font-bold text-sm tracking-wider uppercase backdrop-blur-sm shadow-[0_0_20px_rgba(16,185,129,0.3)] animate-pulse">
+                                💬 FAQ
+                            </span>
+                        </div>
+                        <h3 className="text-4xl md:text-5xl font-extrabold mb-6">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]">
                                 Często zadawane pytania
                             </span>
                         </h3>
-                        <p className="text-gray-400">
+                        <p className="text-xl text-gray-300 font-medium">
                             Wszystko, co musisz wiedzieć o naszych usługach
                         </p>
                     </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                     {faqs.map((faq, idx) => (
                         <div
                             key={idx}
-                            className={`group relative rounded-2xl transition-all duration-500 ${openFaq === idx
-                                    ? 'bg-gray-800/90 border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.25)]'
-                                    : 'bg-gray-800/40 border-gray-700/50 hover:border-emerald-500 hover:bg-gray-800/80 hover:shadow-[0_0_25px_rgba(16,185,129,0.2)]'
-                                } border backdrop-blur-xl overflow-hidden`}
+                            className="group relative"
                         >
-                            {/* Premium Glow Overlay */}
-                            <div className={`absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-emerald-500/5 opacity-0 transition-opacity duration-500 ${openFaq === idx || 'group-hover:opacity-100'
-                                } pointer-events-none`}></div>
+                            {/* Multi-layer Glow Effect */}
+                            <div className={`absolute -inset-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 rounded-3xl opacity-0 blur-xl transition-all duration-700 ${openFaq === idx
+                                ? 'opacity-70 blur-2xl animate-pulse'
+                                : 'group-hover:opacity-40 group-hover:blur-2xl'
+                                }`} style={{ animationDuration: '3s' }}></div>
 
-                            <button
-                                onClick={() => toggleFaq(idx)}
-                                className="w-full px-8 py-6 text-left flex justify-between items-center relative z-10"
-                            >
-                                <span className={`font-bold text-lg pr-8 transition-colors duration-300 ${openFaq === idx ? 'text-emerald-400' : 'text-gray-200 group-hover:text-emerald-300'
-                                    }`}>
-                                    {faq.question}
-                                </span>
-                                <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center border transition-all duration-500 ${openFaq === idx
-                                        ? 'bg-emerald-500 text-white border-emerald-400 rotate-180 shadow-[0_0_15px_rgba(16,185,129,0.4)]'
-                                        : 'bg-gray-800 border-gray-600 text-gray-400 group-hover:border-emerald-500 group-hover:text-emerald-400 group-hover:shadow-[0_0_10px_rgba(16,185,129,0.2)]'
-                                    }`}>
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </div>
-                            </button>
+                            <div className={`absolute -inset-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-3xl opacity-0 transition-all duration-500 ${openFaq === idx
+                                ? 'opacity-100'
+                                : 'group-hover:opacity-60'
+                                }`}></div>
 
                             <div
-                                className={`transition-all duration-500 ease-in-out ${openFaq === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                                    }`}
+                                className={`relative rounded-3xl transition-all duration-500 overflow-hidden ${openFaq === idx
+                                    ? 'bg-gradient-to-br from-gray-800/95 to-gray-900/95 border-[3px] border-emerald-400 shadow-[0_0_40px_rgba(16,185,129,0.4),inset_0_0_30px_rgba(16,185,129,0.1)] transform scale-[1.02]'
+                                    : 'bg-gradient-to-br from-gray-800/60 to-gray-900/60 border-2 border-emerald-500/30 hover:border-emerald-400/60 hover:bg-gray-800/90 hover:shadow-[0_0_35px_rgba(16,185,129,0.25)] hover:transform hover:scale-[1.01]'
+                                    } backdrop-blur-xl`}
                             >
-                                <div className="px-8 pb-8 pt-0 text-gray-300 leading-relaxed relative z-10">
-                                    <div className="h-px w-full bg-gradient-to-r from-emerald-500/50 via-emerald-500/20 to-transparent mb-6"></div>
-                                    {faq.answer}
+                                {/* Animated Background Pattern */}
+                                <div className={`absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/10 to-emerald-500/0 opacity-0 transition-all duration-700 ${openFaq === idx
+                                    ? 'opacity-100 animate-pulse'
+                                    : 'group-hover:opacity-60'
+                                    } pointer-events-none`} style={{ animationDuration: '2s' }}></div>
+
+                                {/* Top highlight */}
+                                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-0 transition-opacity duration-500 ${openFaq === idx ? 'opacity-100' : 'group-hover:opacity-70'
+                                    }`}></div>
+
+                                <button
+                                    onClick={() => toggleFaq(idx)}
+                                    className="w-full px-8 py-7 text-left flex justify-between items-center relative z-10"
+                                >
+                                    <span className={`font-bold text-xl pr-8 transition-all duration-300 ${openFaq === idx
+                                        ? 'text-emerald-300 drop-shadow-[0_0_10px_rgba(16,185,129,0.8)]'
+                                        : 'text-gray-100 group-hover:text-emerald-300'
+                                        }`}>
+                                        {faq.question}
+                                    </span>
+                                    <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${openFaq === idx
+                                        ? 'bg-gradient-to-br from-emerald-500 to-teal-500 text-white border-emerald-300 rotate-180 shadow-[0_0_25px_rgba(16,185,129,0.8)] scale-110'
+                                        : 'bg-gray-800/80 border-emerald-500/40 text-gray-300 group-hover:border-emerald-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] group-hover:scale-105'
+                                        }`}>
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+                                </button>
+
+                                <div
+                                    className={`transition-all duration-700 ease-in-out ${openFaq === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                                        }`}
+                                >
+                                    <div className="px-8 pb-8 pt-0 text-gray-200 leading-relaxed relative z-10 text-base">
+                                        <div className="h-px w-full bg-gradient-to-r from-emerald-400/70 via-teal-400/50 to-transparent mb-6 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+                                        <div className={`transition-all duration-500 ${openFaq === idx ? 'translate-y-0' : 'translate-y-2'}`}>
+                                            {faq.answer}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -316,36 +346,88 @@ export default function InfoSection() {
                 </div>
             </div>
 
-            {/* Contact CTA */}
-            <div className="relative mb-32">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-3xl blur-2xl"></div>
-                <div className="relative bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl p-12 rounded-3xl border border-emerald-500/30 text-center">
-                    <div className="text-5xl mb-6">💬</div>
-                    <h3 className="text-3xl font-bold mb-4">Masz pytania? Jesteśmy tu dla Ciebie!</h3>
-                    <p className="text-gray-300 mb-10 max-w-2xl mx-auto text-lg">
-                        Skontaktuj się z nami bezpośrednio. Bez botów, bez infolinii - tylko konkretna pomoc od ekspertów.
+            {/* Contact CTA - Premium Section */}
+            <div className="relative mt-40 mb-32 group">
+                {/* Multi-layer Glow Effects */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 rounded-[2.5rem] opacity-30 blur-3xl group-hover:opacity-50 transition-all duration-700 animate-pulse" style={{ animationDuration: '4s' }}></div>
+                <div className="absolute -inset-2 bg-gradient-to-r from-emerald-400 via-cyan-400 to-teal-400 rounded-[2.5rem] opacity-40 blur-2xl group-hover:opacity-60 transition-all duration-500"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+
+                <div className="relative bg-gradient-to-br from-gray-800/95 via-gray-900/95 to-black/95 backdrop-blur-2xl p-16 rounded-[2.5rem] border-[3px] border-emerald-500/50 group-hover:border-emerald-400/70 text-center transition-all duration-500 shadow-[0_0_50px_rgba(16,185,129,0.3),inset_0_0_50px_rgba(16,185,129,0.05)] group-hover:shadow-[0_0_70px_rgba(16,185,129,0.5),inset_0_0_70px_rgba(16,185,129,0.1)]">
+
+                    {/* Animated gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/10 to-emerald-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-[2.5rem] pointer-events-none"></div>
+
+                    {/* Top highlight bar */}
+                    <div className="absolute top-0 left-1/4 right-1/4 h-1.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent rounded-full opacity-80 group-hover:opacity-100 transition-opacity"></div>
+
+                    {/* Floating icon with animation */}
+                    <div className="relative inline-block mb-8">
+                        <div className="absolute inset-0 bg-emerald-500 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse" style={{ animationDuration: '3s' }}></div>
+                        <div className="relative text-7xl transform group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_20px_rgba(16,185,129,0.8)]">
+                            💬
+                        </div>
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 relative px-4 sm:px-0">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-emerald-200 to-white drop-shadow-[0_0_30px_rgba(16,185,129,0.5)]">
+                            Masz pytania? Jesteśmy tu dla Ciebie!
+                        </span>
+                    </h3>
+
+                    <p className="text-gray-200 mb-8 sm:mb-12 max-w-2xl mx-auto text-base sm:text-lg md:text-xl leading-relaxed font-medium relative px-4 sm:px-0">
+                        Skontaktuj się z nami bezpośrednio. <span className="text-emerald-300 font-bold">Bez botów, bez infolinii</span> - tylko konkretna pomoc od ekspertów.
                     </p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-6">
+
+                    <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 relative px-4 sm:px-0">
+                        {/* Email Button - Premium */}
                         <a
                             href="mailto:sklep@pro-kom.eu"
-                            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-2xl hover:shadow-emerald-500/50"
+                            className="group/btn relative inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-10 py-4 sm:py-5 overflow-hidden rounded-2xl font-bold text-base sm:text-lg md:text-xl transition-all transform hover:scale-110 active:scale-95 shadow-[0_10px_40px_rgba(16,185,129,0.4)] hover:shadow-[0_15px_60px_rgba(16,185,129,0.6)]"
                         >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            {/* Multi-layer background */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 animate-pulse" style={{ animationDuration: '3s' }}></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+
+                            {/* Glow effect */}
+                            <div className="absolute -inset-2 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover/btn:opacity-60 blur-2xl transition-all duration-300"></div>
+
+                            {/* Shimmer effect */}
+                            <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"></div>
+
+                            <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white relative z-10 transform group-hover/btn:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
-                            <span>sklep@pro-kom.eu</span>
-                            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-20 blur-xl transition-opacity"></div>
+                            <span className="text-white relative z-10 drop-shadow-lg">sklep@pro-kom.eu</span>
                         </a>
+
+                        {/* Phone Button - Premium */}
                         <a
                             href="tel:733400896"
-                            className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gray-700/50 hover:bg-gray-600/50 text-white rounded-xl font-bold text-lg transition-all border-2 border-gray-600 hover:border-emerald-500/50 backdrop-blur-sm"
+                            className="group/btn relative inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-10 py-4 sm:py-5 overflow-hidden rounded-2xl font-bold text-base sm:text-lg md:text-xl transition-all transform hover:scale-110 active:scale-95 shadow-[0_10px_40px_rgba(16,185,129,0.2)] hover:shadow-[0_15px_60px_rgba(16,185,129,0.4)]"
                         >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            {/* Border gradient effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 opacity-0 group-hover/btn:opacity-100 transition-opacity rounded-2xl p-[3px]">
+                                <div className="absolute inset-[3px] bg-gradient-to-br from-gray-800 to-gray-900 rounded-[14px]"></div>
+                            </div>
+
+                            <div className="absolute inset-0 bg-gradient-to-br from-gray-800/80 to-gray-900/80 border-[3px] border-emerald-500/40 group-hover/btn:border-emerald-400/80 rounded-2xl backdrop-blur-sm transition-all"></div>
+
+                            {/* Glow on hover */}
+                            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover/btn:opacity-40 blur-xl transition-all duration-300"></div>
+
+                            {/* Shimmer effect */}
+                            <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-emerald-400/20 to-transparent skew-x-12"></div>
+
+                            <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-emerald-300 relative z-10 transform group-hover/btn:-rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
-                            <span>733-400-896</span>
+                            <span className="text-white relative z-10 drop-shadow-lg group-hover/btn:text-emerald-200">733-400-896</span>
                         </a>
                     </div>
+
+                    {/* Bottom decorative element */}
+                    <div className="absolute bottom-0 left-1/4 right-1/4 h-1 bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent rounded-full"></div>
                 </div>
             </div>
 
