@@ -62,7 +62,9 @@ export default function ContactModal({ isOpen, onClose, type, presetName, preset
         try {
             await api.post('/inquiries', {
                 ...formData,
-                company: '', // Backend expects this field but we removed it from UI
+                phone: formData.phone.trim() || null,  // Send null if empty
+                message: formData.message.trim() || null,  // Send null if empty
+                company: null, // Backend expects this field but we removed it from UI
                 inquiry_type: type,
                 source: 'contact_page',
                 configuration_data: presetId ? { preset_id: presetId, preset_name: presetName } : undefined
