@@ -1,0 +1,8 @@
+import dynamic from 'next/dynamic';
+
+const ConfiguratorPageWithoutSSR = dynamic(
+  () => import('./ConfiguratorPageContent'),
+  { ssr: false }
+);
+
+export default ConfiguratorPageWithoutSSR;
