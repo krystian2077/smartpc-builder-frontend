@@ -40,7 +40,7 @@ export default function PresetDetails() {
   useEffect(() => {
     const fetchPreset = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/presets/${params.id}/details`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/presets/${params.id}/details`);
         if (!res.ok) throw new Error('Failed to fetch preset');
         const data = await res.json();
         setPreset(data);
