@@ -168,13 +168,13 @@ export default function PresetDetails() {
                   </div>
                   <div className="text-right">
                     <span className="text-xs font-semibold inline-block text-emerald-200">
-                      {Math.round(preset.performance_score)}%
+                      {Math.round(preset.performance_score ?? 0)}%
                     </span>
                   </div>
                 </div>
                 <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-700">
                   <div
-                    style={{ width: `${Math.min(100, Math.round(preset.performance_score))}%` }}
+                    style={{ width: `${Math.min(100, Math.round(preset.performance_score ?? 0))}%` }}
                     className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
                   ></div>
                 </div>
