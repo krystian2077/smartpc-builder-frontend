@@ -278,7 +278,18 @@ export default function ConfiguratorPage() {
   }, 0) + (assemblyService ? ASSEMBLY_PRICE : 0);
 
   const toggleExpanded = (type: ComponentType) => {
-    setExpanded((prev) => ({ ...prev, [type]: !prev[type] }));
+    const isExpanding = !expanded[type];
+    setExpanded((prev) => ({ ...prev, [type]: isExpanding }));
+
+    // Scroll to component header when collapsing
+    if (!isExpanding) {
+      setTimeout(() => {
+        const element = document.getElementById(`component-${type}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
+    }
   };
 
   const handleSelectComponent = (type: ComponentType, productId: string) => {
@@ -723,34 +734,59 @@ export default function ConfiguratorPage() {
                                         ))}
                                       </div>
                                     </div>
-                                    <div className="flex flex-row md:flex-col items-center md:items-end gap-2 md:gap-3 w-full md:w-auto">
+
+                                    {/* Price and Buttons */}
+                                    <div className="flex flex-row md:flex-col items-center md:items-end gap-3 w-full md:w-auto mt-2 md:mt-0">
                                       <div
                                         onClick={() => handleSelectComponent(type, product.id)}
                                         className="font-bold text-emerald-400 text-base md:text-xl whitespace-nowrap cursor-pointer flex-1 md:flex-none"
                                       >
                                         {product.price.toLocaleString("pl-PL")} zł
                                       </div>
-                                      <button
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleSelectComponent(type, product.id);
-                                        }}
-                                        className="group/btn relative overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-1.5 md:py-2.5 px-3 md:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-emerald-500/50 flex-shrink-0"
-                                      >
-                                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover/btn:opacity-20 blur-xl transition-opacity duration-300"></div>
-                                        <span className="relative flex items-center justify-center gap-1.5 md:gap-2 text-xs md:text-base whitespace-nowrap">
-                                          <svg className="w-3.5 h-3.5 md:w-5 md:h-5 transition-transform group-hover/btn:rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+
+                                      <div className="flex items-center gap-2">
+                                        {/* Zwiń Button */}
+                                        <button
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleExpanded(type);
+                                          }}
+                                          className="px-3 py-1.5 md:py-2.5 rounded-lg border border-gray-600 text-gray-400 hover:text-white hover:bg-gray-700 hover:border-gray-500 transition-all text-xs md:text-sm font-medium flex items-center gap-1.5 h-full"
+                                          title="Zwiń listę"
+                                        >
+                                          <svg className="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                           </svg>
-                                          Wybierz
-                                        </span>
-                                        <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-                                      </button>
+                                          <span className="hidden sm:inline">Zwiń</span>
+                                        </button>
+
+                                        {/* Premium "Wybierz" Button */}
+                                        <button
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleSelectComponent(type, product.id);
+                                          }}
+                                          className="group/btn relative overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-1.5 md:py-2.5 px-3 md:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-emerald-500/50 flex-shrink-0"
+                                        >
+                                          {/* Glow effect */}
+                                          <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover/btn:opacity-20 blur-xl transition-opacity duration-300"></div>
+
+                                          {/* Button content */}
+                                          <span className="relative flex items-center justify-center gap-1.5 md:gap-2 text-xs md:text-base whitespace-nowrap">
+                                            <svg className="w-3.5 h-3.5 md:w-5 md:h-5 transition-transform group-hover/btn:rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            Wybierz
+                                          </span>
+
+                                          {/* Shine effect */}
+                                          <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-
                             ))}
                           {getProductsForType(type).length === 0 && (
                             <div className="text-center py-8 text-gray-500 italic">

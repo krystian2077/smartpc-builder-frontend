@@ -72,33 +72,29 @@ export default function PresetsPage() {
           </header>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {presets?.map((preset, index) => (
+            {presets?.map((preset) => (
               <div
                 key={preset.id}
-                className="group bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500 p-6 cursor-pointer border border-gray-700 hover:border-emerald-500/50 transform hover:-translate-y-2 hover:scale-[1.02] animate-fade-in relative overflow-hidden"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="group bg-gray-800 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 cursor-pointer border border-gray-700 hover:border-emerald-500/50 transform hover:-translate-y-1"
                 onClick={() => router.push(`/presets/${preset.id}`)}
               >
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-
-                <div className="flex justify-between items-start mb-4 relative z-10">
+                <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
-                    <h2 className="text-lg font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-teal-400 transition-all duration-300 line-clamp-2">
+                    <h2 className="text-xl font-semibold text-white mb-2 group-hover:text-emerald-400 transition-colors">
                       {preset.name}
                     </h2>
                     {preset.description && (
-                      <p className="text-sm text-gray-400 line-clamp-2 h-10 group-hover:text-gray-300 transition-colors">
+                      <p className="text-sm text-gray-400 line-clamp-2 h-10">
                         {preset.description}
                       </p>
                     )}
                   </div>
                 </div>
 
-                <div className="space-y-3 mt-4 pt-4 border-t border-gray-700 relative z-10 group-hover:border-emerald-500/30 transition-colors">
+                <div className="space-y-3 mt-4 pt-4 border-t border-gray-700">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-400">Cena:</span>
-                    <span className="text-2xl font-bold text-emerald-400 group-hover:text-white transition-colors">
+                    <span className="text-2xl font-bold text-emerald-400">
                       {formatPrice(preset.total_price)}
                     </span>
                   </div>
@@ -115,7 +111,7 @@ export default function PresetsPage() {
                       e.stopPropagation();
                       router.push(`/presets/${preset.id}`);
                     }}
-                    className="w-full mt-4 px-4 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all shadow-lg hover:shadow-emerald-500/25 group-hover:scale-[1.02] active:scale-95"
+                    className="w-full mt-4 px-4 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all shadow-lg hover:shadow-emerald-500/25"
                   >
                     Zobacz szczegóły →
                   </button>
