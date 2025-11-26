@@ -702,20 +702,20 @@ export default function ConfiguratorPage() {
                                 {/* Hover glow effect */}
                                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl blur-lg opacity-0 group-hover/item:opacity-100 transition-all duration-500"></div>
 
-                                <div className="relative w-full text-left p-4 rounded-xl border transition-all duration-300 border-gray-700 bg-gray-700/30 hover:border-emerald-500/50 hover:bg-gray-700/50 hover:shadow-lg">
-                                  <div className="flex justify-between items-start gap-4">
+                                <div className="relative w-full text-left p-2.5 md:p-4 rounded-xl border transition-all duration-300 border-gray-700 bg-gray-700/30 hover:border-emerald-500/50 hover:bg-gray-700/50 hover:shadow-lg">
+                                  <div className="flex flex-col md:flex-row justify-between items-start gap-2.5 md:gap-4">
                                     <div
                                       onClick={() => handleSelectComponent(type, product.id)}
-                                      className="flex-1 cursor-pointer"
+                                      className="flex-1 cursor-pointer min-w-0"
                                     >
-                                      <div className="font-semibold text-lg mb-1 text-white group-hover/item:text-emerald-300 transition-colors">
+                                      <div className="font-semibold text-sm md:text-lg mb-2 md:mb-1 text-white group-hover/item:text-emerald-300 transition-colors leading-tight">
                                         {product.name}
                                       </div>
-                                      <div className="text-sm text-gray-400 flex flex-wrap gap-2">
+                                      <div className="text-[10px] md:text-sm text-gray-400 flex flex-wrap gap-1 md:gap-2">
                                         {Object.entries(product.specifications || {}).map(([key, val]) => (
                                           <span
                                             key={key}
-                                            className="inline-block bg-gray-800 px-2 py-1 rounded text-xs border border-gray-600 group-hover/item:border-gray-500 transition-colors"
+                                            className="inline-block bg-gray-800 px-1.5 md:px-2 py-0.5 md:py-1 rounded text-[10px] md:text-xs border border-gray-600 group-hover/item:border-gray-500 transition-colors"
                                           >
                                             <span className="text-gray-500">{SPEC_LABELS[key] || key}:</span>{" "}
                                             <span className="text-gray-300">{String(val)}</span>
@@ -723,25 +723,28 @@ export default function ConfiguratorPage() {
                                         ))}
                                       </div>
                                     </div>
-                                    <div className="flex flex-col items-end gap-2">
+                                    <div className="flex flex-row md:flex-col items-center md:items-end gap-2 md:gap-3 w-full md:w-auto">
                                       <div
                                         onClick={() => handleSelectComponent(type, product.id)}
-                                        className="font-bold text-emerald-400 text-lg whitespace-nowrap cursor-pointer"
+                                        className="font-bold text-emerald-400 text-base md:text-xl whitespace-nowrap cursor-pointer flex-1 md:flex-none"
                                       >
                                         {product.price.toLocaleString("pl-PL")} zł
                                       </div>
                                       <button
                                         onClick={(e) => {
                                           e.stopPropagation();
-                                          toggleExpanded(type);
+                                          handleSelectComponent(type, product.id);
                                         }}
-                                        className="mt-2 px-4 py-2 sm:px-3.5 sm:py-1.5 bg-gray-800/80 text-gray-300 border border-emerald-500/50 hover:border-emerald-400/70 hover:bg-gray-700 hover:text-emerald-200 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.2)] hover:shadow-[0_0_15px_rgba(16,185,129,0.4)] min-h-[44px]"
-                                        title="Zwiń listę"
+                                        className="group/btn relative overflow-hidden bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-1.5 md:py-2.5 px-3 md:px-6 rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-emerald-500/50 flex-shrink-0"
                                       >
-                                        <svg className="w-3.5 h-3.5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                        <span>Zwiń</span>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover/btn:opacity-20 blur-xl transition-opacity duration-300"></div>
+                                        <span className="relative flex items-center justify-center gap-1.5 md:gap-2 text-xs md:text-base whitespace-nowrap">
+                                          <svg className="w-3.5 h-3.5 md:w-5 md:h-5 transition-transform group-hover/btn:rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                          </svg>
+                                          Wybierz
+                                        </span>
+                                        <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
                                       </button>
                                     </div>
                                   </div>
