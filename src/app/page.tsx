@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
+import InfoSection from "@/components/InfoSection";
 
 type DeviceType = "pc" | "laptop";
 type Segment = "home" | "gaming" | "pro";
@@ -316,6 +317,9 @@ export default function Home() {
               </p>
             </div>
           </section>
+
+          {/* Info Section - Features, Process, FAQ, Contact */}
+          <InfoSection />
         </div>
       </div>
     </main>
