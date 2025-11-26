@@ -281,14 +281,14 @@ export default function ConfiguratorPage() {
     const isExpanding = !expanded[type];
     setExpanded((prev) => ({ ...prev, [type]: isExpanding }));
 
-    // Scroll to component header when collapsing
+    // Scroll to component header when collapsing (immediate for better UX)
     if (!isExpanding) {
       setTimeout(() => {
         const element = document.getElementById(`component-${type}`);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 500);
+      }, 10);
     }
   };
 
@@ -622,11 +622,11 @@ export default function ConfiguratorPage() {
                   {/* Content */}
                   {/* Content */}
                   <div
-                    className={`grid transition-[grid-template-rows] duration-500 ease-in-out ${expanded[type] ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    className={`grid transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${expanded[type] ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                       }`}
                   >
                     <div className="overflow-hidden">
-                      <div className={`p-6 pt-0 border-t border-gray-700/50 transition-opacity duration-500 ${expanded[type] ? "opacity-100" : "opacity-0"
+                      <div className={`p-6 pt-0 border-t border-gray-700/50 transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${expanded[type] ? "opacity-100" : "opacity-0"
                         }`}>
                         {/* Filters */}
                         <div className="mt-6">
