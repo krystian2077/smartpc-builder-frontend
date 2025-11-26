@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import ContactModal from '@/components/ContactModal';
 import CompanyDetailsModal from '@/components/CompanyDetailsModal';
+import { api } from '@/lib/api';
 
 interface Product {
   id: string;
@@ -39,10 +40,8 @@ export default function PresetDetails() {
   useEffect(() => {
     const fetchPreset = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/presets/${params.id}/details`);
-        if (!res.ok) throw new Error('Failed to fetch preset');
-        const data = await res.json();
-        setPreset(data);
+        const response = await api.get(`/presets/${params.id}/details`);
+        setPreset(response.data);
       } catch (error) {
         console.error('Error fetching preset:', error);
       } finally {
